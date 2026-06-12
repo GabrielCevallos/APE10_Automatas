@@ -41,4 +41,6 @@ ESPACIO = [ \t\r\n]+
 ";"                 { return symbol(sym.PUNTOYCOMA); }
 {ESPACIO}           { /* ignorar */ }
 
+[A-Za-z]+           { return symbol(sym.ERROR); }
+
 [^]                 { return symbol(sym.ERROR); }
