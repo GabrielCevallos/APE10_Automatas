@@ -1,0 +1,140 @@
+package com.ape10.rover.lang;
+
+import java_cup.runtime.*;
+
+terminal String MOVE, FORWARD, BACKWARD, TURN, LEFT, RIGHT;
+terminal String TAKE, SAMPLE, FROM, METERS, DEGREES;
+terminal String SOIL, ROCK, GAS;
+terminal String NUMERO, PUNTOYCOMA, ERROR;
+
+non terminal Node programa, lista_comandos, comando;
+non terminal Node comando_move, comando_turn, comando_sample;
+non terminal Node dir_move, dir_turn, terreno;
+
+start with programa;
+
+programa ::= lista_comandos:l
+    {: 
+        Node n = new Node("programa");
+        n.add(l);
+        RESULT = n;
+    :}
+;
+
+lista_comandos ::= comando:c PUNTOYCOMA:p
+    {:
+        Node n = new Node("lista_comandos");
+        n.add(c);
+        n.add(new Node("PUNTOYCOMA", p));
+        RESULT = n;
+    :}
+    | comando:c PUNTOYCOMA:p lista_comandos:r
+    {:
+        Node n = new Node("lista_comandos");
+        n.add(c);
+        n.add(new Node("PUNTOYCOMA", p));
+        n.add(r);
+        RESULT = n;
+    :}
+;
+
+comando ::= comando_move:m
+    {:
+        Node n = new Node("comando");
+        n.add(m);
+        RESULT = n;
+    :}
+    | comando_turn:t
+    {:
+        Node n = new Node("comando");
+        n.add(t);
+        RESULT = n;
+    :}
+    | comando_sample:s
+    {:
+        Node n = new Node("comando");
+        n.add(s);
+        RESULT = n;
+    :}
+;
+
+comando_move ::= MOVE:m dir_move:d NUMERO:n METERS:t
+    {:
+        Node nd = new Node("comando_move");
+        nd.add(new Node("MOVE", m));
+        nd.add(d);
+        nd.add(new Node("NUMERO", n));
+        nd.add(new Node("METERS", t));
+        RESULT = nd;
+    :}
+;
+
+comando_turn ::= TURN:t dir_turn:d NUMERO:n DEGREES:g
+    {:
+        Node nd = new Node("comando_turn");
+        nd.add(new Node("TURN", t));
+        nd.add(d);
+        nd.add(new Node("NUMERO", n));
+        nd.add(new Node("DEGREES", g));
+        RESULT = nd;
+    :}
+;
+
+comando_sample ::= TAKE:t SAMPLE:s FROM:f terreno:r
+    {:
+        Node nd = new Node("comando_sample");
+        nd.add(new Node("TAKE", t));
+        nd.add(new Node("SAMPLE", s));
+        nd.add(new Node("FROM", f));
+        nd.add(r);
+        RESULT = nd;
+    :}
+;
+
+dir_move ::= FORWARD:f
+    {:
+        Node nd = new Node("dir_move");
+        nd.add(new Node("FORWARD", f));
+        RESULT = nd;
+    :}
+    | BACKWARD:b
+    {:
+        Node nd = new Node("dir_move");
+        nd.add(new Node("BACKWARD", b));
+        RESULT = nd;
+    :}
+;
+
+dir_turn ::= LEFT:l
+    {:
+        Node nd = new Node("dir_turn");
+        nd.add(new Node("LEFT", l));
+        RESULT = nd;
+    :}
+    | RIGHT:r
+    {:
+        Node nd = new Node("dir_turn");
+        nd.add(new Node("RIGHT", r));
+        RESULT = nd;
+    :}
+;
+
+terreno ::= SOIL:s
+    {:
+        Node nd = new Node("terreno");
+        nd.add(new Node("SOIL", s));
+        RESULT = nd;
+    :}
+    | ROCK:r
+    {:
+        Node nd = new Node("terreno");
+        nd.add(new Node("ROCK", r));
+        RESULT = nd;
+    :}
+    | GAS:g
+    {:
+        Node nd = new Node("terreno");
+        nd.add(new Node("GAS", g));
+        RESULT = nd;
+    :}
+;
