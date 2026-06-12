@@ -2,6 +2,29 @@ package com.ape10.rover.lang;
 
 import java_cup.runtime.*;
 
+parser code {:
+    private String ultimoError;
+    private int lineaError;
+    private int columnaError;
+
+    public void report_error(String mensaje, Object info) {
+        ultimoError = mensaje;
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = (java_cup.runtime.Symbol) info;
+            lineaError = s.left;
+            columnaError = s.right;
+        }
+    }
+
+    public void debug_message(String msg) {
+        // Silenciar mensajes de depuracion de JCup
+    }
+
+    public String getUltimoError() { return ultimoError; }
+    public int getLineaError() { return lineaError; }
+    public int getColumnaError() { return columnaError; }
+:};
+
 terminal String MOVE, FORWARD, BACKWARD, TURN, LEFT, RIGHT;
 terminal String TAKE, SAMPLE, FROM, METERS, DEGREES;
 terminal String SOIL, ROCK, GAS;
