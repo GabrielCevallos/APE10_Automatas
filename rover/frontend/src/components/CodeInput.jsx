@@ -1,15 +1,20 @@
 import { useState } from 'react'
 
 const EXAMPLES = [
-  'MOVE FORWARD 10 METERS; TURN LEFT 90 DEGREES; TAKE SAMPLE FROM SOIL;',
-  'MOVE BACKWARD 5 METERS;',
-  'MOVE FORWARD 10 METERS; TURN RIGHT 45 DEGREES;',
-  'TAKE SAMPLE FROM ROCK; TURN LEFT 180 DEGREES; MOVE FORWARD 20 METERS;',
-  'TAKE SAMPLE FROM GAS;',
-  'MOVE SIDEWAYS 10 METERS;',
-  'MOVE 10 METERS;',
-  'TURN 90 DEGREES;',
-  'TAKE SAMPLE FROM;',
+  { code: 'MOVE FORWARD 10 METERS; TURN LEFT 90 DEGREES; TAKE SAMPLE FROM SOIL;', valid: true },
+  { code: 'MOVE BACKWARD 5 METERS;', valid: true },
+  { code: 'MOVE FORWARD 10 METERS; TURN RIGHT 45 DEGREES;', valid: true },
+  { code: 'TAKE SAMPLE FROM ROCK; TURN LEFT 180 DEGREES; MOVE FORWARD 20 METERS;', valid: true },
+  { code: 'TAKE SAMPLE FROM GAS;', valid: true },
+  { code: 'MOVE SIDEWAYS 10 METERS;', valid: false },
+  { code: 'MOVE 10 METERS;', valid: false },
+  { code: 'TURN 90 DEGREES;', valid: false },
+  { code: 'TAKE SAMPLE FROM;', valid: false },
+  { code: 'MOVE FORWARD 10 METERS @!ñ;', valid: false },
+  { code: 'MOVE FORWARD 0 METERS;', valid: true },
+  { code: 'MOVE FORWARD 3.14 METERS;', valid: true },
+  { code: 'MOVE FORWARD 10 METERS; TURN LEFT 90 DEGREES; TAKE SAMPLE FROM SOIL; 42;', valid: false },
+  { code: 'MOVE FORWARD 10 METERS; TURN LEFT 90 DEGREES;TAKE SAMPLE FROM SOIL;', valid: true },
 ]
 
 function CodeInput({ onCompile, loading }) {
@@ -49,9 +54,17 @@ function CodeInput({ onCompile, loading }) {
             <button
               key={i}
               type="button"
-              className="secondary"
-              style={{ fontSize: '0.75rem', padding: '0.3rem 0.7rem' }}
-              onClick={() => handleExample(ex)}
+              onClick={() => handleExample(ex.code)}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.3rem 0.7rem',
+                background: ex.valid ? '#1a3a2a' : '#3a1a1a',
+                color: ex.valid ? '#4ade80' : '#f87171',
+                border: `1px solid ${ex.valid ? '#4ade80' : '#f87171'}`,
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 500,
+              }}
             >
               Ejemplo {i + 1}
             </button>

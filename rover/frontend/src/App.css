@@ -12,7 +12,7 @@ body {
 }
 
 .app {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -109,15 +109,17 @@ button.secondary:hover {
   background: #3a3a5a;
 }
 
-.result-section {
+.status-panel {
+  margin-bottom: 1.5rem;
+}
+
+.result-split {
   display: flex;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .result-panel {
-  flex: 1;
-  min-width: 300px;
   background: #1a1a2e;
   border-radius: 12px;
   padding: 1.5rem;
@@ -130,6 +132,15 @@ button.secondary:hover {
   letter-spacing: 0.05em;
   color: #aaaadd;
   margin-bottom: 1rem;
+}
+
+.result-split .result-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-split .tree-panel {
+  flex: 2;
 }
 
 .status-badge {
@@ -162,58 +173,21 @@ button.secondary:hover {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
   line-height: 1.4;
-  margin-bottom: 1rem;
   white-space: pre-wrap;
 }
 
-.tree-panel {
-  flex: 2;
-  min-width: 400px;
-}
-
-.tree-container {
-  background: #12121f;
+.tree-svg-box {
+  background: #0d0d1a;
   border-radius: 8px;
   padding: 1rem;
-  overflow-x: auto;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.78rem;
-  line-height: 1.6;
-}
-
-.tree-node {
-  white-space: nowrap;
-}
-
-.tree-line {
+  overflow: auto;
   display: flex;
-  align-items: center;
-  padding: 1px 0;
+  justify-content: center;
 }
 
-.tree-indent {
-  display: inline-block;
-  white-space: pre;
-  color: #3a3a5a;
-}
-
-.tree-connector {
-  color: #4a6cf7;
-  margin-right: 4px;
-}
-
-.tree-node-label {
-  color: #aaccff;
-  font-weight: 500;
-}
-
-.tree-node-label.terminal {
-  color: #f0c060;
-}
-
-.tree-node-label .lexeme {
-  color: #7acc8a;
-  font-weight: 400;
+.tree-svg-box svg {
+  max-width: 100%;
+  height: auto;
 }
 
 table {
@@ -255,10 +229,10 @@ tr:hover td {
 }
 
 .grammar-section {
-  margin-top: 1.5rem;
   background: #1a1a2e;
   border-radius: 12px;
   padding: 1.5rem;
+  margin-bottom: 1.5rem;
   border: 1px solid #2a2a4a;
 }
 
@@ -318,8 +292,7 @@ tr:hover td {
     padding: 1rem;
   }
 
-  .result-panel,
-  .tree-panel {
-    min-width: 100%;
+  .result-split {
+    flex-direction: column;
   }
 }

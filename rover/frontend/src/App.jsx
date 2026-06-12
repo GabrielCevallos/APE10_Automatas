@@ -32,26 +32,30 @@ function App() {
       <h1>Rover Lang</h1>
       <p className="subtitle">Intérprete de comandos para rover espacial</p>
 
+      <GrammarDisplay />
+
       <CodeInput onCompile={handleCompile} loading={loading} />
 
       {result && (
-        <div className="result-section">
-          <div className="result-panel">
+        <>
+          <div className="result-panel status-panel">
             <ResultPanel valido={result.valido} error={result.error} />
-            <TokenTable tokens={result.tokens} />
           </div>
-          <div className="result-panel tree-panel">
-            <h2>Árbol de derivación</h2>
-            {result.arbol ? (
-              <DerivationTree node={result.arbol} />
-            ) : (
-              <p className="empty-state">No hay árbol (entrada inválida)</p>
-            )}
+          <div className="result-split">
+            <div className="result-panel">
+              <TokenTable tokens={result.tokens} />
+            </div>
+            <div className="result-panel tree-panel">
+              <h2>Árbol de derivación</h2>
+              {result.arbol ? (
+                <DerivationTree node={result.arbol} />
+              ) : (
+                <p className="empty-state">No hay árbol (entrada inválida)</p>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
-
-      <GrammarDisplay />
     </div>
   )
 }
